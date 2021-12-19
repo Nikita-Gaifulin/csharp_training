@@ -59,21 +59,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountData.cs" />
+    <Compile Include="ContactHelper.cs" />
+    <Compile Include="GroupModificationTests.cs" />
+    <Compile Include="model\AccountData.cs" />
+    <Compile Include="appManager\ApplicationManager.cs" />
     <Compile Include="Circle.cs" />
-    <Compile Include="ContactCreationTests.cs" />
-    <Compile Include="ContactData.cs" />
+    <Compile Include="tests\ContactCreationTests.cs" />
+    <Compile Include="model\ContactData.cs" />
     <Compile Include="Figure.cs" />
-    <Compile Include="GroupData.cs" />
+    <Compile Include="model\GroupData.cs" />
+    <Compile Include="appManager\GroupHelper.cs" />
+    <Compile Include="tests\GroupRemovalTests.cs" />
+    <Compile Include="appManager\HelperBase.cs" />
+    <Compile Include="appManager\LoginHelper.cs" />
+    <Compile Include="appManager\NavigationHelper.cs" />
     <Compile Include="Square.cs" />
-    <Compile Include="UnitsTest.cs" />
-    <Compile Include="GroupCreationTests.cs" />
+    <Compile Include="tests\TestBase.cs" />
+    <Compile Include="tests\GroupCreationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
