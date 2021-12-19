@@ -10,7 +10,7 @@ namespace addressbookWebTests
         {
             this.baseURL = baseURL;
         }
-        public void OpenHomePage()
+        public void OpenAddressbook()
         {
             driver.Navigate().GoToUrl(baseURL + "/addressbook/");
         }
@@ -23,6 +23,11 @@ namespace addressbookWebTests
         public void GoToContactsPage()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+        }
+
+        public void GoToHomePage()
+        {
+            driver.FindElement(By.LinkText("home")).Click();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace addressbookWebTests
         public void SetupTest()
         {
             app = new ApplicationManager();
-            app.Navigator.OpenHomePage();
+            app.Navigator.OpenAddressbook();
             app.Auth.Login(new AccountData("admin", "secret"));
         }
 

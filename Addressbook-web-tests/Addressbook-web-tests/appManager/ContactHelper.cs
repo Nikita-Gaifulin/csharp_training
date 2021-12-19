@@ -16,10 +16,52 @@ namespace addressbookWebTests
             manager.Auth.Logout();
             return this;
         }
+        public void Remove(int numberContact)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(numberContact);
+            DeleteContact();
+            manager.Auth.Logout();
+        }
+
+        public ContactHelper Modify(int numberContact, ContactData newData)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(numberContact);
+            EditContactCreation(numberContact);
+            FillContactForm(newData);
+            SubmitContactModification();
+            return this;
+        }
+
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("//tr[" + (index + 1) + "]/td/input")).Click();
+            return this;
+        }
+
+        public ContactHelper DeleteContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+
+        public ContactHelper EditContactCreation(int numberContact)
+        {
+            driver.FindElement(By.XPath("//tr[" + (numberContact + 1) + "]/td[8]/a/img")).Click();
+            return this;
+        }
 
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            return this;
+        }
+
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
             return this;
         }
 
