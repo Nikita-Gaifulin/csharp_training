@@ -3,7 +3,7 @@
 namespace addressbookWebTests
 {
     [TestFixture]
-    class ContactModificationTests : TestBase
+    class ContactModificationTests : AuthTestBase
     {
         [Test]
         public void ContactModificationTest()
@@ -33,7 +33,7 @@ namespace addressbookWebTests
             modifiedContact.Address2 = "sdfdsf";
             modifiedContact.Phone2 = "456546";
             modifiedContact.Notes = "fdgdfg";
-            app.Contacts.Modify(2, modifiedContact);
+            app.Contacts.Modify(1, modifiedContact);
         }
     }
 }

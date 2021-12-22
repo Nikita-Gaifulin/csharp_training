@@ -13,7 +13,6 @@ namespace addressbookWebTests
             manager.Navigator.GoToContactsPage();
             FillContactForm(contact);
             SubmitContactCreation();
-            manager.Auth.Logout();
             return this;
         }
         public void Remove(int numberContact)
@@ -21,12 +20,16 @@ namespace addressbookWebTests
             manager.Navigator.GoToHomePage();
             SelectContact(numberContact);
             DeleteContact();
-            manager.Auth.Logout();
         }
 
         public ContactHelper Modify(int numberContact, ContactData newData)
         {
             manager.Navigator.GoToHomePage();
+            if (!IsContactsExisted())
+            {
+                ContactData emptyContact = new ContactData();
+                Create(emptyContact);
+            }
             SelectContact(numberContact);
             EditContactCreation(numberContact);
             FillContactForm(newData);
@@ -42,6 +45,11 @@ namespace addressbookWebTests
 
         public ContactHelper DeleteContact()
         {
+            if (!IsContactsExisted())
+            {
+                ContactData emptyContact = new ContactData();
+                Create(emptyContact);
+            }
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
             return this;
@@ -51,6 +59,18 @@ namespace addressbookWebTests
         {
             driver.FindElement(By.XPath("//tr[" + (numberContact + 1) + "]/td[8]/a/img")).Click();
             return this;
+        }
+
+        bool IsContactsExisted()
+        {
+            if (IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[3]/td/input")))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public ContactHelper SubmitContactCreation()
@@ -67,30 +87,30 @@ namespace addressbookWebTests
 
         protected void FillContactForm(ContactData contact)
         {
-            ClickTextBox("firstname", contact.FirstName);
-            ClickTextBox("middlename", contact.Middlename);
-            ClickTextBox("lastname", contact.Lastname);
-            ClickTextBox("nickname", contact.Nickname);
-            ClickTextBox("title", contact.Title);
-            ClickTextBox("company", contact.Company);
-            ClickTextBox("address", contact.Address);
-            ClickTextBox("home", contact.Home);
-            ClickTextBox("mobile", contact.Mobile);
-            ClickTextBox("work", contact.Work);
-            ClickTextBox("fax", contact.Fax);
-            ClickTextBox("email", contact.Email);
-            ClickTextBox("email2", contact.Email2);
-            ClickTextBox("email3", contact.Email3);
-            ClickTextBox("homepage", contact.Homepage);
-            ClickDropdownList("bday", contact.Bday);
-            ClickDropdownList("bmonth", contact.Bmonth);
-            ClickTextBox("byear", contact.Byear);
-            ClickDropdownList("aday", contact.Aday);
-            ClickDropdownList("amonth", contact.Amonth);
-            ClickTextBox("ayear", contact.Ayear);
-            ClickTextBox("address2", contact.Address2);
-            ClickTextBox("phone2", contact.Phone2);
-            ClickTextBox("notes", contact.Notes);
+            ClickTextBox(By.Name("firstname"), contact.FirstName);
+            ClickTextBox(By.Name("middlename"), contact.Middlename);
+            ClickTextBox(By.Name("lastname"), contact.Lastname);
+            ClickTextBox(By.Name("nickname"), contact.Nickname);
+            ClickTextBox(By.Name("title"), contact.Title);
+            ClickTextBox(By.Name("company"), contact.Company);
+            ClickTextBox(By.Name("address"), contact.Address);
+            ClickTextBox(By.Name("home"), contact.Home);
+            ClickTextBox(By.Name("mobile"), contact.Mobile);
+            ClickTextBox(By.Name("work"), contact.Work);
+            ClickTextBox(By.Name("fax"), contact.Fax);
+            ClickTextBox(By.Name("email"), contact.Email);
+            ClickTextBox(By.Name("email2"), contact.Email2);
+            ClickTextBox(By.Name("email3"), contact.Email3);
+            ClickTextBox(By.Name("homepage"), contact.Homepage);
+            ClickDropdownList(By.Name("bday"), contact.Bday);
+            ClickDropdownList(By.Name("bmonth"), contact.Bmonth);
+            ClickTextBox(By.Name("byear"), contact.Byear);
+            ClickDropdownList(By.Name("aday"), contact.Aday);
+            ClickDropdownList(By.Name("amonth"), contact.Amonth);
+            ClickTextBox(By.Name("ayear"), contact.Ayear);
+            ClickTextBox(By.Name("address2"), contact.Address2);
+            ClickTextBox(By.Name("phone2"), contact.Phone2);
+            ClickTextBox(By.Name("notes"), contact.Notes);
         }
     }
 }

@@ -13,17 +13,36 @@ namespace addressbookWebTests
             this.manager = manager;
             driver = manager.Driver;
         }
-        public void ClickTextBox(string elementsTag, string elementsName)
+        public void ClickTextBox(By locator, string elementsName)
         {
-            driver.FindElement(By.Name(elementsTag)).Click();
-            driver.FindElement(By.Name(elementsTag)).Clear();
-            driver.FindElement(By.Name(elementsTag)).SendKeys(elementsName);
+            if (elementsName != null)
+            {
+                driver.FindElement(locator).Click();
+                driver.FindElement(locator).Clear();
+                driver.FindElement(locator).SendKeys(elementsName);
+            }
         }
 
-        public void ClickDropdownList(string elementsTag, string elementsName)
+        public void ClickDropdownList(By locator, string elementsName)
         {
-            driver.FindElement(By.Name(elementsTag)).Click();
-            new SelectElement(driver.FindElement(By.Name(elementsTag))).SelectByText(elementsName);
+            if (elementsName != null)
+            {
+                driver.FindElement(locator).Click();
+                new SelectElement(driver.FindElement(locator)).SelectByText(elementsName);
+            }
+        }
+
+        public bool IsElementPresent(By by)
+        {
+            try
+            {
+                driver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
         }
     }
 }
