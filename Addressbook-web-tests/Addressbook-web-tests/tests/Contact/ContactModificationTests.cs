@@ -8,6 +8,7 @@ namespace addressbookWebTests
         [Test]
         public void ContactModificationTest()
         {
+            int numberContact = 10;
             ContactData modifiedContact = new ContactData();
             modifiedContact.FirstName = "Nikita4";
             modifiedContact.Middlename = "Tester4";
@@ -33,7 +34,8 @@ namespace addressbookWebTests
             modifiedContact.Address2 = "sdfdsf";
             modifiedContact.Phone2 = "456546";
             modifiedContact.Notes = "fdgdfg";
-            app.Contacts.Modify(1, modifiedContact);
+            app.Contacts.VerifyExistingContact(numberContact);
+            app.Contacts.Modify(numberContact, modifiedContact);
         }
     }
 }

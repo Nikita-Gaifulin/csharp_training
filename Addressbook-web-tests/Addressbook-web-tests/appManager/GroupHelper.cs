@@ -11,11 +11,6 @@ namespace addressbookWebTests
         public void Remove(int numberGroup)
         {
             manager.Navigator.GoToGroupsPage();
-            if (!IsGroupsExisted())
-            {
-                GroupData emptyData = new GroupData("");
-                Create(emptyData);
-            }
             SelectGroup(numberGroup);
             DeleteGroup();
         }
@@ -23,13 +18,6 @@ namespace addressbookWebTests
         public GroupHelper Modify(int numberGroup, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-            if (!IsGroupsExisted())
-            {
-                GroupData emptyData = new GroupData("");
-                emptyData.Header = "";
-                emptyData.Footer = "";
-                Create(emptyData);
-            }
             SelectGroup(numberGroup);
             InitGroupModification();
             FillGroupForm(newData);
@@ -52,7 +40,6 @@ namespace addressbookWebTests
         public GroupHelper Create(GroupData group)
         {
             manager.Navigator.GoToGroupsPage();
-
             InitGroupCreation();
             FillGroupForm(group);
             SubmitGroupCreation();
@@ -71,9 +58,21 @@ namespace addressbookWebTests
             return this;
         }
 
-        bool IsGroupsExisted()
+        public GroupHelper VerifyExistingGroup(int numberGroup)
         {
-            if (IsElementPresent(By.Name("selected[]")))
+            manager.Navigator.GoToGroupsPage();
+            while (!IsGroupsExisted(numberGroup))
+            {
+                GroupData emptyData = new GroupData("");
+                Create(emptyData);
+                manager.Navigator.GoToGroupsPage();
+            }
+            return this;
+        }
+
+        bool IsGroupsExisted(int numberGroup)
+        {
+            if (IsElementPresent(By.XPath("//div[@id='content']/form/span[" + numberGroup + "]/input")))
             {
                 return true;
             }

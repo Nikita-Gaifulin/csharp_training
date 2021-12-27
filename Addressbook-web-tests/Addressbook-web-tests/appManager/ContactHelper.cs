@@ -25,11 +25,6 @@ namespace addressbookWebTests
         public ContactHelper Modify(int numberContact, ContactData newData)
         {
             manager.Navigator.GoToHomePage();
-            if (!IsContactsExisted())
-            {
-                ContactData emptyContact = new ContactData();
-                Create(emptyContact);
-            }
             SelectContact(numberContact);
             EditContactCreation(numberContact);
             FillContactForm(newData);
@@ -43,13 +38,20 @@ namespace addressbookWebTests
             return this;
         }
 
-        public ContactHelper DeleteContact()
+        public ContactHelper VerifyExistingContact(int numberContact)
         {
-            if (!IsContactsExisted())
+            manager.Navigator.GoToHomePage();
+            while(!IsContactsExisted(numberContact))
             {
                 ContactData emptyContact = new ContactData();
                 Create(emptyContact);
+                manager.Navigator.GoToHomePage();
             }
+            return this;
+        }
+
+        public ContactHelper DeleteContact()
+        {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
             return this;
@@ -61,9 +63,9 @@ namespace addressbookWebTests
             return this;
         }
 
-        bool IsContactsExisted()
+        bool IsContactsExisted(int numberContact)
         {
-            if (IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[3]/td/input")))
+            if (IsElementPresent(By.XPath("//tr[" + (numberContact + 1) + "]/td/input")))
             {
                 return true;
             }

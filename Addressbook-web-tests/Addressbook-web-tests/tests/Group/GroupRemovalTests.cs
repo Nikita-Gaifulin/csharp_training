@@ -8,7 +8,9 @@ namespace addressbookWebTests
         [Test]
         public void GroupRemovalTest()
         {
-            app.Groups.Remove(1);
+            int numberGroup = 10;
+            app.Groups.VerifyExistingGroup(numberGroup);
+            app.Groups.Remove(numberGroup);
         }
     }
 }

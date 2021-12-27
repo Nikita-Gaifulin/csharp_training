@@ -8,7 +8,9 @@ namespace addressbookWebTests
         [Test]
         public void ContactRemovalTest()
         {
-            app.Contacts.Remove(1);
+            int numberContact = 10;
+            app.Contacts.VerifyExistingContact(numberContact);
+            app.Contacts.Remove(numberContact);
         }
     }
 }
