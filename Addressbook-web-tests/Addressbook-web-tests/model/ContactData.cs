@@ -1,7 +1,8 @@
-﻿
+﻿using System;
+
 namespace addressbookWebTests
 {
-    public class ContactData
+    public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string firstName;
         private string middlename;
@@ -27,6 +28,44 @@ namespace addressbookWebTests
         private string address2;
         private string phone2;
         private string notes;
+
+        public ContactData(string firstName, string lastname)
+        {
+            this.firstName = firstName;
+            this.lastname = lastname;
+        }
+
+        public bool Equals(ContactData other)
+        {
+            if (object.ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            return (FirstName == other.FirstName) & (Lastname == other.Lastname);
+        }
+
+        public override int GetHashCode()
+        {
+            return FirstName.GetHashCode() + Lastname.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return "FirstName =" + FirstName + "\n" + "Lastname =" + Lastname;
+        }
+
+        public int CompareTo(ContactData other)
+        {
+            if (object.ReferenceEquals(other, null))
+            {
+                return 1;
+            }
+            return FirstName.CompareTo(other.FirstName) * Lastname.CompareTo(other.Lastname);
+        }
 
         public string FirstName
         {

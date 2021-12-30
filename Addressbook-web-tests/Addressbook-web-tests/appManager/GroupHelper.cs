@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System.Collections.Generic;
+using OpenQA.Selenium;
 
 namespace addressbookWebTests
 {
@@ -23,6 +24,19 @@ namespace addressbookWebTests
             FillGroupForm(newData);
             SubmitGroupModification();
             return this;
+        }
+
+        public List<GroupData> GetGroupsList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            manager.Navigator.GoToGroupsPage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+                
+            }
+            return groups;
         }
 
         public GroupHelper SubmitGroupModification()
@@ -54,14 +68,14 @@ namespace addressbookWebTests
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("//div[@id='content']/form/span[" + index + "]/input")).Click();
+            driver.FindElement(By.XPath("//div[@id='content']/form/span[" + (index + 1) + "]/input")).Click();
             return this;
         }
 
         public GroupHelper VerifyExistingGroup(int numberGroup)
         {
             manager.Navigator.GoToGroupsPage();
-            while (!IsGroupsExisted(numberGroup))
+            while (!IsGroupsExisted(numberGroup + 1))
             {
                 GroupData emptyData = new GroupData("");
                 Create(emptyData);

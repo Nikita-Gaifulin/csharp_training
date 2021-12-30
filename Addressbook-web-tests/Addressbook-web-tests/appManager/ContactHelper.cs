@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System.Collections.Generic;
 
 namespace addressbookWebTests
 {
@@ -32,6 +33,19 @@ namespace addressbookWebTests
             return this;
         }
 
+        public List<ContactData> GetContactsList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("[class='sortcompletecallback-applyZebra'] tr"));
+            foreach (IWebElement element in elements)
+            {
+                contacts.Add(new ContactData(element.Text, element.Text));
+
+            }
+            return contacts;
+        }
+
         public ContactHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath("//tr[" + (index + 1) + "]/td/input")).Click();
@@ -43,7 +57,7 @@ namespace addressbookWebTests
             manager.Navigator.GoToHomePage();
             while(!IsContactsExisted(numberContact))
             {
-                ContactData emptyContact = new ContactData();
+                ContactData emptyContact = new ContactData("", "");
                 Create(emptyContact);
                 manager.Navigator.GoToHomePage();
             }

@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace addressbookWebTests
 {
@@ -8,32 +9,42 @@ namespace addressbookWebTests
         [Test]
         public void ContactCreationTest()
         {
-            ContactData contact = new ContactData();
-            contact.FirstName = "Nikita";
-            contact.Middlename = "Tester1";
-            contact.Lastname = "Tester2";
-            contact.Nickname = "Tester3";
-            contact.Title = "Tester4";
-            contact.Company = "Testers";
-            contact.Address = "www";
-            contact.Home = "home1";
-            contact.Mobile = "99999";
-            contact.Work = "88888";
-            contact.Fax = "7865757";
-            contact.Email = "sdfsd@dfsfd";
-            contact.Email2 = "234dsfg@dsfs";
-            contact.Email3 = "dsfsdf@dsfs.ry";
-            contact.Homepage = "Tester";
-            contact.Bday = "2";
-            contact.Bmonth = "October";
-            contact.Byear = "2074";
-            contact.Aday = "3";
-            contact.Amonth = "September";
-            contact.Ayear = "2099";
-            contact.Address2 = "sdfdsf";
-            contact.Phone2 = "456546";
-            contact.Notes = "fdgdfg";
+            ContactData contact = new ContactData("Nikita", "Gayfulin");
+
+            contact.Middlename = null;
+
+            contact.Nickname = null;
+            contact.Title = null;
+            contact.Company = null;
+            contact.Address = null;
+            contact.Home = null;
+            contact.Mobile = null;
+            contact.Work = null;
+            contact.Fax = null;
+            contact.Email = null;
+            contact.Email2 = null;
+            contact.Email3 = null;
+            contact.Homepage = null;
+            contact.Bday = null;
+            contact.Bmonth = null;
+            contact.Byear = null;
+            contact.Aday = null;
+            contact.Amonth = null;
+            contact.Ayear = null;
+            contact.Address2 = null;
+            contact.Phone2 = null;
+            contact.Notes = null;
+
+            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+
             app.Contacts.Create(contact);
+
+            List<ContactData> newContacts = app.Contacts.GetContactsList();
+
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts.Count, newContacts.Count);
         }
     }
 }
