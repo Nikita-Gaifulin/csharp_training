@@ -14,11 +14,14 @@ namespace addressbookWebTests
             group.Footer = "ddd";
             List<GroupData> oldGroups = app.Groups.GetGroupsList();
             app.Groups.Create(group);
+
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
+
             List<GroupData> newGroups = app.Groups.GetGroupsList();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
-            Assert.AreEqual(oldGroups.Count, newGroups.Count);
+            Assert.AreEqual(oldGroups, newGroups);
         }
 
         [Test]
@@ -29,11 +32,12 @@ namespace addressbookWebTests
             group.Footer = "";
             List<GroupData> oldGroups = app.Groups.GetGroupsList();
             app.Groups.Create(group);
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
             List<GroupData> newGroups = app.Groups.GetGroupsList();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
-            Assert.AreEqual(oldGroups.Count, newGroups.Count);
+            Assert.AreEqual(oldGroups, newGroups);
         }
 
         [Test]
@@ -44,11 +48,12 @@ namespace addressbookWebTests
             group.Footer = "";
             List<GroupData> oldGroups = app.Groups.GetGroupsList();
             app.Groups.Create(group);
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
             List<GroupData> newGroups = app.Groups.GetGroupsList();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
-            Assert.AreEqual(oldGroups.Count, newGroups.Count);
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }

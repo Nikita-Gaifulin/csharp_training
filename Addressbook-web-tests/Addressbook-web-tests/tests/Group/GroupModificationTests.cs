@@ -16,14 +16,23 @@ namespace addressbookWebTests
             app.Groups.VerifyExistingGroup(numberGroup);
 
             List<GroupData> oldGroups = app.Groups.GetGroupsList();
+            GroupData oldData = oldGroups[numberGroup];
 
             app.Groups.Modify(numberGroup, newData);
+            Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
             List<GroupData> newGroups = app.Groups.GetGroupsList();
             oldGroups[numberGroup].Name = newData.Name;
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups.Count, newGroups.Count);
+            foreach (GroupData group in newGroups)
+            {
+                if (group.Id == oldData.Id)
+                {
+                    Assert.AreEqual(newData.Name, group.Name);
+                }
+            }
         }
     }
 }

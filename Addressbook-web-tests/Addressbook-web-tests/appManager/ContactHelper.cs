@@ -5,6 +5,8 @@ namespace addressbookWebTests
 {
     public class ContactHelper : HelperBase
     {
+        private List<ContactData> contactCache = null;
+
         public ContactHelper(ApplicationManager manager) : base(manager)
         {
         }
@@ -35,15 +37,26 @@ namespace addressbookWebTests
 
         public List<ContactData> GetContactsList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("[class='sortcompletecallback-applyZebra'] tr"));
-            foreach (IWebElement element in elements)
+            if (contactCache == null)
             {
-                contacts.Add(new ContactData(element.Text, element.Text));
+                contactCache = new List<ContactData>();
+                manager.Navigator.GoToHomePage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("[name='entry']"));
+                
+                foreach (IWebElement element in elements)
+                {
+                    IList<IWebElement> cells = element.FindElements(By.TagName("td"));
+                    contactCache.Add(new ContactData(cells[2].Text, cells[1].Text));
+                }
+            }   
+            
+            return new List<ContactData>(contactCache);
+        }
 
-            }
-            return contacts;
+        public int GetContactCount()
+        {
+            manager.Navigator.GoToHomePage();
+            return driver.FindElements(By.CssSelector("[name='entry']")).Count;
         }
 
         public ContactHelper SelectContact(int index)
@@ -68,6 +81,7 @@ namespace addressbookWebTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
+            contactCache = null;
             return this;
         }
 
@@ -92,12 +106,14 @@ namespace addressbookWebTests
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;
             return this;
         }
 
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCache = null;
             return this;
         }
 

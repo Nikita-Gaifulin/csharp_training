@@ -41,6 +41,7 @@ namespace addressbookWebTests
             List<ContactData> oldContacts = app.Contacts.GetContactsList();
             
             app.Contacts.Modify(numberContact, modifiedContact);
+            Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount());
 
             List<ContactData> newContacts = app.Contacts.GetContactsList();
 
@@ -48,7 +49,7 @@ namespace addressbookWebTests
             oldContacts[numberContact].Lastname = modifiedContact.Lastname;
             oldContacts.Sort();
             newContacts.Sort();
-            Assert.AreEqual(oldContacts.Count, newContacts.Count);
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

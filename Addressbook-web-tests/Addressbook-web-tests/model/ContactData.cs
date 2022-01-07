@@ -45,7 +45,7 @@ namespace addressbookWebTests
             {
                 return true;
             }
-            return (FirstName == other.FirstName) & (Lastname == other.Lastname);
+            return (FirstName == other.FirstName) && (Lastname == other.Lastname);
         }
 
         public override int GetHashCode()
@@ -64,6 +64,12 @@ namespace addressbookWebTests
             {
                 return 1;
             }
+            if (FirstName.CompareTo(other.FirstName) < 0)
+                if (Lastname.CompareTo(other.Lastname) < 0)
+                {
+                    return -(FirstName.CompareTo(other.FirstName) * Lastname.CompareTo(other.Lastname));
+                }
+
             return FirstName.CompareTo(other.FirstName) * Lastname.CompareTo(other.Lastname);
         }
 

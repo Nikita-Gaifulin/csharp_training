@@ -39,12 +39,14 @@ namespace addressbookWebTests
 
             app.Contacts.Create(contact);
 
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
+
             List<ContactData> newContacts = app.Contacts.GetContactsList();
 
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();
-            Assert.AreEqual(oldContacts.Count, newContacts.Count);
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }
