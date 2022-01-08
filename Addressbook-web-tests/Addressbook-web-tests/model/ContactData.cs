@@ -55,7 +55,7 @@ namespace addressbookWebTests
 
         public override string ToString()
         {
-            return "FirstName =" + FirstName + "\n" + "Lastname =" + Lastname;
+            return "FirstName =" + FirstName + ", " + "Lastname =" + Lastname;
         }
 
         public int CompareTo(ContactData other)
@@ -65,11 +65,13 @@ namespace addressbookWebTests
                 return 1;
             }
             if (FirstName.CompareTo(other.FirstName) < 0)
-                if (Lastname.CompareTo(other.Lastname) < 0)
+            {
+                // so that the last name has a higher priority while sorting
+                if (Lastname.CompareTo(other.Lastname) != 0)
                 {
                     return -(FirstName.CompareTo(other.FirstName) * Lastname.CompareTo(other.Lastname));
                 }
-
+            }
             return FirstName.CompareTo(other.FirstName) * Lastname.CompareTo(other.Lastname);
         }
 

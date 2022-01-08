@@ -45,8 +45,8 @@ namespace addressbookWebTests
 
             List<ContactData> newContacts = app.Contacts.GetContactsList();
 
-            oldContacts[numberContact].FirstName = modifiedContact.FirstName;
-            oldContacts[numberContact].Lastname = modifiedContact.Lastname;
+            oldContacts[numberContact - 1].FirstName = modifiedContact.FirstName;
+            oldContacts[numberContact - 1].Lastname = modifiedContact.Lastname;
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
