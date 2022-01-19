@@ -125,7 +125,7 @@ namespace addressbookWebTests
                 }
                 else
                 {
-                    return CleanUpEmails(Email) + CleanUpEmails(Email2) + Email3;
+                    return (CleanUpEmails(Email) + CleanUpEmails(Email2) + CleanUpEmails(Email3)).Trim();
                 }
             }
             set
