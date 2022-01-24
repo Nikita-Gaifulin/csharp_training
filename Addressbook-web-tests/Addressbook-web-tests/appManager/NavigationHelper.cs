@@ -48,5 +48,10 @@ namespace addressbookWebTests
             }
             driver.FindElement(By.LinkText("home")).Click();
         }
+
+        public void GoToDetails(int row)
+        {
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[" + (row + 2) + "]/td[7]/a/img")).Click();
+        }
     }
 }
