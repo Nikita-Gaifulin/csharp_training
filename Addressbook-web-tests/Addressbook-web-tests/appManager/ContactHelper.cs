@@ -290,7 +290,7 @@ namespace addressbookWebTests
 
         protected void FillContactForm(ContactData contact)
         {
-            ClickTextBox(By.Name("firstname"), contact.FirstName);
+            ClickTextBox(By.Name("firstname"), contact.Firstname);
             ClickTextBox(By.Name("middlename"), contact.Middlename);
             ClickTextBox(By.Name("lastname"), contact.Lastname);
             ClickTextBox(By.Name("nickname"), contact.Nickname);

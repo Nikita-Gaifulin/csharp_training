@@ -10,9 +10,13 @@ namespace addressbookWebTests
         private string allEmails;
         private string[] myDetails = new string[19];
 
+        public ContactData()
+        {
+        }
+
         public ContactData(string firstName, string lastname)
         {
-            FirstName = firstName;
+            Firstname = firstName;
             Lastname = lastname;
         }
 
@@ -26,17 +30,17 @@ namespace addressbookWebTests
             {
                 return true;
             }
-            return (FirstName == other.FirstName) && (Lastname == other.Lastname);
+            return (Firstname == other.Firstname) && (Lastname == other.Lastname);
         }
 
         public override int GetHashCode()
         {
-            return FirstName.GetHashCode() + Lastname.GetHashCode();
+            return Firstname.GetHashCode() + Lastname.GetHashCode();
         }
 
         public override string ToString()
         {
-            return "FirstName =" + FirstName + ", " + "Lastname =" + Lastname;
+            return "FirstName =" + Firstname + ", " + "Lastname =" + Lastname;
         }
 
         public int CompareTo(ContactData other)
@@ -45,12 +49,12 @@ namespace addressbookWebTests
             {
                 return 1;
             }
-            string expectedResult = $"{Lastname} {FirstName}";
-            string actualResult = $"{other.Lastname} {other.FirstName}";
+            string expectedResult = $"{Lastname} {Firstname}";
+            string actualResult = $"{other.Lastname} {other.Firstname}";
             return expectedResult.CompareTo(actualResult);
         }
 
-        public string FirstName { get; set; }
+        public string Firstname { get; set; }
 
         public string Middlename { get; set; }
 
@@ -135,12 +139,12 @@ namespace addressbookWebTests
                 allEmails = value;
             }
         }
-
+        /*
         public string[] Details
         {
            get
            {
-                myDetails[0] = (FirstName + " " + Middlename + " " + Lastname).Trim();
+                myDetails[0] = (Firstname + " " + Middlename + " " + Lastname).Trim();
                 myDetails[0] = Regex.Replace(myDetails[0], @"\s+", " ");
                 myDetails[1] = Nickname;
                 myDetails[2] = Title;
@@ -243,7 +247,7 @@ namespace addressbookWebTests
                 myDetails = value;
            }
         }
-
+        */
         public string CleanUp(string text)
         {
             if (text == null || text == "")
