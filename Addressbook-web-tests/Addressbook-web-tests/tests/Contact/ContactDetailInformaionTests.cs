@@ -6,11 +6,15 @@ namespace addressbookWebTests
     public class ContactDetailInformaionTests : AuthTestBase
     {
         [Test]
-        public void ContactDetailInformationTest()
+        public void TestContactDetails()
         {
-            ContactData fromEditForm = app.Contacts.GetContactDetailInformationFromEditForm(0);
-            string[] detailsFromTable = app.Contacts.GetContactDetailInformationFromTable(0);
-            //CollectionAssert.AreEqual(detailsFromTable, fromEditForm.Details);
+            int indexToVerify = 1;
+            ContactData dataFromEditForm = app.Contacts.GetContactDetailInformationFromEditForm(indexToVerify);
+            string dataFromDetails = app.Contacts.GetContactDetailInformationFromTable(indexToVerify);
+
+
+            CollectionAssert.AreEqual(dataFromEditForm.AllData, dataFromDetails);
+
         }
     }
 }

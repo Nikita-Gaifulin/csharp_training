@@ -34,49 +34,14 @@ namespace addressbookWebTests
             };
         }
 
-        public string[] GetContactDetailInformationFromTable(int index)
+        public string GetContactDetailInformationFromTable(int index)
         {
             manager.Navigator.GoToHomePage();
             manager.Navigator.GoToDetails(index);
-            
-            string[] details = driver.FindElement(By.CssSelector("div#content")).Text.Split('\r', '\n');
-            details = details.Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
-            return details;
-            /*
-            string allName = details[0];
+            string allData = driver.FindElement(By.XPath("//div[@id='content']")).Text;
 
-            string nickname = details[2];
-            string title = details[4];
-            string company = details[6];
-            string address = details[8];
-
-            string homePhone1 = Regex.Replace(details[12], @"[H: ]", "");
-            string mobilePhone = Regex.Replace(details[14], @"[M: ]", "");
-            string workPhone = Regex.Replace(details[16], @"[W: ]", "");
-            string fax = Regex.Replace(details[18], @"[F: ]", "");
-            string homePhone2 = Regex.Replace(details[44], @"[P: ]", "");
-            
-            string email = details[20];
-            string email2 = details[22];
-            string email3 = details[24];
-            string homepage = details[30];
-
-            string birthday = (Regex.Replace(details[34], @"[.]", " "));
-            int start = birthday.LastIndexOf("(");
-
-            birthday = birthday.Remove(start, birthday.Length - start);
-            birthday = birthday.Remove(0, 9);
-
-            string anniversary = (Regex.Replace(details[36], @"[.]", " "));
-            start = anniversary.LastIndexOf("(");
-            anniversary = anniversary.Remove(start, anniversary.Length - start);
-            anniversary = anniversary.Remove(0, 9);
-
-            string address2 = details[42];
-
-            string note = details[48];
-            */
+            return allData;
         }
 
         public ContactData GetContactBriefInformationFromEditForm(int index)
