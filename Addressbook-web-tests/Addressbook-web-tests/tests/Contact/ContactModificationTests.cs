@@ -38,18 +38,28 @@ namespace addressbookWebTests
 
             app.Contacts.VerifyExistingContact(numberContact);
 
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
-            
-            app.Contacts.Modify(numberContact, modifiedContact);
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData oldContactData = oldContacts[numberContact - 1];
+
+            app.Contacts.Modify(oldContactData, modifiedContact);
+
             Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount());
 
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            List<ContactData> newContacts = ContactData.GetAll();
 
             oldContacts[numberContact - 1].Firstname = modifiedContact.Firstname;
             oldContacts[numberContact - 1].Lastname = modifiedContact.Lastname;
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
+
+            foreach (var contact in newContacts)
+            {
+                if (contact.Id == oldContactData.Id)
+                {
+                    Assert.AreEqual($"{modifiedContact.Lastname} {modifiedContact.Firstname}", $"{contact.Lastname} {contact.Firstname}");
+                }
+            }
         }
     }
 }

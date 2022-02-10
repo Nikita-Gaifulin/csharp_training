@@ -7,6 +7,8 @@ namespace addressbookWebTests
     public class TestBase
     {
         protected ApplicationManager app;
+        public static bool PERFORM_LONG_UI_CHECKS = true;
+        public static Random R = new Random();
 
         [SetUp]
         public void SetupApplicationManager()

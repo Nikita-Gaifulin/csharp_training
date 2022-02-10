@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using OpenQA.Selenium;
 
 namespace addressbookWebTests
@@ -15,6 +16,13 @@ namespace addressbookWebTests
         {
             manager.Navigator.GoToGroupsPage();
             SelectGroup(numberGroup);
+            DeleteGroup();
+        }
+
+        public void Remove(GroupData group)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(group.Id);
             DeleteGroup();
         }
 
@@ -101,6 +109,12 @@ namespace addressbookWebTests
         public GroupHelper SelectGroup(int index)
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/span[" + (index + 1) + "]/input")).Click();
+            return this;
+        }
+
+        private GroupHelper SelectGroup(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name = 'selected[]' and @value= '"+id+"'])")).Click();
             return this;
         }
 

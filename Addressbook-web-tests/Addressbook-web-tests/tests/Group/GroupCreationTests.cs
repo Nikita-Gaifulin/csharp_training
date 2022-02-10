@@ -5,11 +5,13 @@ using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Linq;
+using System;
 
 namespace addressbookWebTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -80,12 +82,12 @@ namespace addressbookWebTests
         public void GroupCreationTest(GroupData group)
         {
  
-            List<GroupData> oldGroups = app.Groups.GetGroupsList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             app.Groups.Create(group);
 
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupsList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -98,14 +100,23 @@ namespace addressbookWebTests
             GroupData group = new GroupData("a ' a");
             group.Header = "";
             group.Footer = "";
-            List<GroupData> oldGroups = app.Groups.GetGroupsList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             app.Groups.Create(group);
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
-            List<GroupData> newGroups = app.Groups.GetGroupsList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
+        }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            foreach (ContactData contact in GroupData.GetAll()[0].GetContacts())
+            {
+                System.Console.Out.WriteLine(contact);
+            }
         }
     }
 }

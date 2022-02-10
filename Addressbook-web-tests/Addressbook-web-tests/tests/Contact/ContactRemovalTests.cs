@@ -12,18 +12,22 @@ namespace addressbookWebTests
             int numberContact = 1;
             app.Contacts.VerifyExistingContact(numberContact);
 
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData contactToRemove = oldContacts[oldContacts.Count - numberContact];
 
-            app.Contacts.Remove(numberContact);
+            app.Contacts.Remove(contactToRemove);
             Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactCount());
 
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            List<ContactData> newContacts = ContactData.GetAll();
 
-            oldContacts.RemoveAt(numberContact);
+            oldContacts.Remove(contactToRemove);
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
-
+            foreach (var contact in newContacts)
+            {
+                Assert.AreNotEqual(contact.Id, contactToRemove.Id);
+            }
         }
     }
 }
