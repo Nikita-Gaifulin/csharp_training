@@ -18,7 +18,7 @@ namespace mantis_tests
             options.AddArguments("--lang=en");
             driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
-            baseURL = "http://localhost";
+            baseURL = "http://localhost/mantisbt-2.25.2";
             Registration = new RegistrationHelper(this);
             Ftp = new FtpHelper(this);
             James = new JamesHelper(this);
@@ -26,6 +26,8 @@ namespace mantis_tests
             Login = new LoginLogoutHelper(this);
             Navigate = new NavigationHelper(this);
             Project = new ProjectHelper(this);
+            Admin = new AdminHelper(this, baseURL);
+            Api = new APIHelper(this);
         }
 
         ~ApplicationManager()
@@ -45,7 +47,7 @@ namespace mantis_tests
             if (!application.IsValueCreated)
             {
                 ApplicationManager newInstance = new ApplicationManager();
-                newInstance.driver.Url = "http://localhost/mantisbt-2.25.2/mantisbt-2.25.2/login_page.php";
+                newInstance.driver.Url = newInstance.baseURL +  "/mantisbt-2.25.2/login_page.php";
                 application.Value = newInstance;
             }
             return application.Value;
@@ -66,5 +68,7 @@ namespace mantis_tests
         public LoginLogoutHelper Login { get; set; }
         public NavigationHelper Navigate { get; set; }
         public ProjectHelper Project { get; set; }
+        public AdminHelper Admin { get; private set; }
+        public APIHelper Api { get; private set; }
     }
 }
